@@ -3,8 +3,33 @@ import { motion } from 'framer-motion';
 import SponsorDetails from './SponsorDetails';
 
 const sponsorsData = [
-  { id: 1, name: 'TechCorp', logo: '/path/to/techcorp-logo.png', location: 'San Francisco, CA', owner: 'John Doe', description: 'Leading AI research company' },
-  { id: 2, name: 'AI Innovations', logo: '/path/to/ai-innovations-logo.png', location: 'New York, NY', owner: 'Jane Smith', description: 'Cutting-edge AI solutions provider' },
+    { 
+      id: 1, name: 'Physiotherapy and Orthocare Clinic', 
+      logo: 'Physiotherapy & Orthocare clinic PDF-1_page-0001.jpg', 
+      location: 'S.T.Stand Road,Shirala Naka,Ganesh Nager,Islampur', 
+      owner: 'Dr.Pradip Rokade', 
+      description: `Services:
+      - Back Pain Clinic
+       - Joint pain and arthritis therapy
+       - Neurorehabilitation for paralysis
+       - Child rehabilitation
+       - Sports physiotherapy
+       - Post-surgery recovery therapy
+       - Dietary advice
+  Advanced Treatments:
+  - Laser, Shockwave, IFT
+  - Ultrasound, Diathermy, CPM
+  - Spinal Decompression Therapy' `
+    },
+    {
+      id: 2,
+      name: 'New Ajinkya Bazar',
+      logo: '/images/id-1.jpg', // Relative path to the image in the public folder
+      location: 'Shri Building, near Dr. Ravi Yadav Hospital, Islampur',
+      owner: 'Vijay Patil',
+      description: 'Customer satisfaction and customer welfare are our motto! Ajinkya Bazar Family offers high-quality lentils, pulses, semolina, flour, flattened rice (poha), as well as generous discounts on all company products, making it the go-to choice for everyone in the Islampur region. Visit, verify, and then make your purchase, and also get a golden opportunity to win exciting prizes along with your shopping!'
+    },    
+  
   { id: 3, name: 'FutureWave', logo: '/path/to/futurewave-logo.png', location: 'Boston, MA', owner: 'Mike Johnson', description: 'Next-gen AI hardware manufacturer' },
   { id: 4, name: 'Quantum Solutions', logo: '/path/to/quantum-solutions-logo.png', location: 'Austin, TX', owner: 'Sarah Brown', description: 'Quantum computing and AI integration' },
   { id: 5, name: 'NeuralNet Systems', logo: '/path/to/neuralnet-logo.png', location: 'Seattle, WA', owner: 'David Lee', description: 'Neural network optimization specialists' },

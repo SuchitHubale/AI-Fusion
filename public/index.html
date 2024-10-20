@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AI Fusion</title>
+    <link rel="icon" type="image/png" href="./logo.png" />
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/10.13.2/firebase-app-compat.js"></script>
@@ -88,7 +89,7 @@
   <body>
     <div id="root"></div> <!-- This div is the container where React will render your app -->
 
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <p id="load"> Loading&hellip;</p>
 
     <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -110,7 +111,7 @@
           loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
         } catch (e) {
           console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+          loadEl.textContent = '';
         }
       });
     </script>

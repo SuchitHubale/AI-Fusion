@@ -7,27 +7,35 @@ const Admin = () => {
   const [registrations, setRegistrations] = useState([]);
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState('All');
-  
+  const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // New state for authentication
+  const [error, setError] = useState('');
+
   const db = getFirestore(app);
 
   useEffect(() => {
-    // Fetch registrations and events from Firestore
-    const fetchData = async () => {
-      // Fetch registrations
-      const registrationsCollection = collection(db, 'registrations');
-      const registrationSnapshot = await getDocs(registrationsCollection);
-      const registrationList = registrationSnapshot.docs.map(doc => doc.data());
-      setRegistrations(registrationList);
+    if (isAuthenticated) {
+      // Fetch registrations and events from Firestore only when authenticated
+      const fetchData = async () => {
+        const registrationsCollection = collection(db, 'registrations');
+        const registrationSnapshot = await getDocs(registrationsCollection);
+        const registrationList = registrationSnapshot.docs.map((doc) => doc.data());
+        
+        // Sort the registrationList by 'createdAt' field (ascending order)
+        const sortedRegistrations = registrationList.sort((a, b) => 
+          new Date(a.createdAt) - new Date(b.createdAt)
+        );
+        setRegistrations(sortedRegistrations);
 
-      // Fetch events
-      const eventsCollection = collection(db, 'events');
-      const eventsSnapshot = await getDocs(eventsCollection);
-      const eventsList = eventsSnapshot.docs.map(doc => doc.data().title); // Assuming the title attribute
-      setEvents(eventsList);
-    };
+        const eventsCollection = collection(db, 'events');
+        const eventsSnapshot = await getDocs(eventsCollection);
+        const eventsList = eventsSnapshot.docs.map((doc) => doc.data().title); // Assuming the title attribute
+        setEvents(eventsList);
+      };
 
-    fetchData();
-  }, [db]);
+      fetchData();
+    }
+  }, [db, isAuthenticated]);
 
   // Function to download Excel
   const downloadExcel = () => {
@@ -40,8 +48,44 @@ const Admin = () => {
   // Filtered registrations based on selected event
   const filteredRegistrations = selectedEvent === 'All'
     ? registrations
-    : registrations.filter(registration => registration.event === selectedEvent);
+    : registrations.filter((registration) => registration.event === selectedEvent);
 
+  // Function to handle login
+  const handleLogin = () => {
+    const adminPassword = 'aiml@2667'; // Replace with your password or use an environment variable
+    if (password === adminPassword) {
+      setIsAuthenticated(true);
+    } else {
+      setError('Incorrect password. Please try again.');
+    }
+  };
+
+  // If not authenticated, show the login form
+  if (!isAuthenticated) {
+    return (
+      <div className="p-4">
+        <h1 className="text-xl font-bold mb-4">Admin Login</h1>
+        <div className="mb-4">
+          <label className="mr-2">Enter Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="px-4 py-2 border rounded"
+          />
+        </div>
+        {error && <p className="text-red-500">{error}</p>}
+        <button
+          onClick={handleLogin}
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          Login
+        </button>
+      </div>
+    );
+  }
+
+  // If authenticated, show the admin dashboard
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Registrations</h1>
@@ -72,7 +116,7 @@ const Admin = () => {
           Download Excel
         </button>
       </div>
-      
+
       {/* Registration Table */}
       <table className="min-w-full bg-white border border-gray-200">
         <thead>

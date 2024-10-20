@@ -11,10 +11,27 @@ const RegistrationForm = ({ onClose }) => {
     phone: '',
     event: '',
     amount: 0,
+    collegeName: '',
+    department: '',
+    participantsNames: '',
   });
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [eventName, setEventName] = useState("");
+
+  const departments = [
+    'CSE',
+    'CS-IT',
+    'MECHANICAL',
+    'MECHATRONICS',
+    'CIVIL',
+    'ELECTRICAL',
+    'MBA',
+    'BBA',
+    'AIML',
+    'E&TC',
+    'OTHER'
+  ];
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -68,6 +85,8 @@ const RegistrationForm = ({ onClose }) => {
         paymentId: "", // Empty string initially
         orderId: orderId, // Save generated UUID orderId in Firestore
         createdAt: new Date(Date.now()).toString(),
+        department: formData.department,
+        participantsNames: formData.participantsNames,
       };
   
       const paymentRef = collection(firestore, "registrations");
@@ -91,7 +110,7 @@ const RegistrationForm = ({ onClose }) => {
             });
   
             // You can add a success message or perform additional actions
-            toast.success("Registration Successful!");
+          
           } catch (error) {
             console.error("Error updating Firestore with payment ID:", error);
           }
@@ -110,7 +129,6 @@ const RegistrationForm = ({ onClose }) => {
       const rzp = new window.Razorpay(options);
       rzp.open();
 
-      toast.success("Registration Successfull!")
     } catch (error) {
       console.error("Error initiating payment or saving data to Firestore:", error);
     }
@@ -120,17 +138,7 @@ const RegistrationForm = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      // await addDoc(collection(db, "registrations"), {
-      //   name: formData.name,
-      //   email: formData.email,
-      //   phone: formData.phone,
-      //   event: eventName,
-      //   amount: formData.amount,
-      //   timestamp: new Date(),
-      // });
       handlePayment();
-
-      
       onClose();
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -151,7 +159,7 @@ const RegistrationForm = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 z-50">
-      <div className="bg-gradient-to-br from-indigo-900 to-purple-900 text-white rounded-lg p-6 w-full max-w-md">
+      <div className="bg-gradient-to-br from-indigo-900 to-purple-900 text-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
         <h2 className="text-2xl font-bold mb-4 text-gray-100">Fill out the form</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -191,27 +199,70 @@ const RegistrationForm = ({ onClose }) => {
             />
           </div>
           <div>
-            <label htmlFor="event" className="block mb-1">Event</label>
-            {loading ? (
-              <p>Loading events...</p>
-            ) : (
-              <select
-                id="event"
-                name="event"
-                value={formData.event}
-                onChange={handleChange}
-                required
-                className="w-full bg-indigo-800 text-white px-3 py-2 rounded"
-              >
-                <option value="">Select an event</option>
-                {events.map(event => (
-                  <option key={event.id} value={event.id}>
-                    {event.title}
-                  </option>
-                ))}
-              </select>
-            )}
+            <label htmlFor="collegeName" className="block mb-1">College Name</label>
+            <input
+              type="text"
+              id="collegeName"
+              name="collegeName"
+              value={formData.collegeName}
+              onChange={handleChange}
+              required
+              className="w-full bg-indigo-800 text-white px-3 py-2 rounded"
+            />
           </div>
+          <div>
+            <label htmlFor="department" className="block mb-1">Department</label>
+            <select
+              id="department"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              required
+              className="w-full bg-indigo-800 text-white px-3 py-2 rounded"
+            >
+              <option value="">Select a department</option>
+              {departments.map(dept => (
+                <option key={dept} value={dept}>
+                  {dept}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="participantsNames" className="block mb-1">Participants Names</label>
+            <textarea
+              id="participantsNames"
+              name="participantsNames"
+              value={formData.participantsNames}
+              onChange={handleChange}
+              required
+              className="w-full bg-indigo-800 text-white px-3 py-2 rounded"
+              rows="3"
+              placeholder="Enter names separated by commas"
+            ></textarea>
+          </div>
+          <div>
+      <label htmlFor="event" className="block mb-1">Event</label>
+      {loading ? (
+        <p>Loading events...</p>
+      ) : (
+        <select
+          id="event"
+          name="event"
+          value={formData.event}
+          onChange={handleChange}
+          required
+          className="w-full bg-indigo-800 text-white px-3 py-2 rounded"
+        >
+          <option value="">Select an event</option>
+          {events.map(event => (
+            <option key={event.id} value={event.id}>
+              {event.title}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
           <div>
             <label htmlFor="amount" className="block mb-1">Amount</label>
             <input

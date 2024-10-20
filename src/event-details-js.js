@@ -14,9 +14,14 @@ const EventDetails = ({ event, onClose, onRegister }) => {
         style={modalSpring}
         className="bg-gradient-to-br from-indigo-900 to-purple-900 text-white rounded-xl p-8 w-full max-w-2xl border border-indigo-500 shadow-2xl overflow-y-auto max-h-[90vh]"
       >
-        <h2 className="text-4xl font-bold mb-6 text-indigo-300 font-['Orbitron']">{event.name}</h2>
+        <h2 className="text-4xl font-bold mb-6 text-indigo-2  00 font-['Orbitron']">{event.name}</h2>
         <img src={event.image} alt={event.name} className="w-full h-64 object-cover rounded-lg mb-6" />
-        <p className="mb-6 text-indigo-200 text-lg leading-relaxed">{event.fullDescription}</p>
+        <p className="mb-6 text-indigo-200 text-lg leading-relaxed">{event.round1}</p>
+        <p className="mb-6 text-indigo-200 text-lg leading-relaxed">{event.round2}</p>
+        <p className="mb-6 text-indigo-200 text-lg leading-relaxed">{event.round3}</p>
+        <p className="mb-6 text-indigo-200 text-lg leading-relaxed">{event.round4}</p>
+        <p className="mb-6 text-indigo-200 text-lg leading-relaxed">{event.round5}</p>
+        <p className="mb-6 text-indigo-200 text-lg leading-relaxed">{event.round6}</p>
         
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>

@@ -77,14 +77,6 @@ const Main = () => {
 
     if (refs[section]?.current) {
       refs[section].current.scrollIntoView({ behavior: 'smooth' });
-      toast.success(`Scrolled to ${section} section`, {
-        position: 'top-center',
-        style: {
-          borderRadius: '10px',
-          background: 'black',
-          color: '#fff',
-        },
-      });
     }
   };
 
@@ -117,9 +109,9 @@ const Main = () => {
               />
             </Suspense>
           </div>
-          <div ref={sponsorsRef}>
+          {/* <div ref={sponsorsRef}>
             <Sponsors />
-          </div>
+          </div> */}
         </main>
 
         {selectedEvent && (

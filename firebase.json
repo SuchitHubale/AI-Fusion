@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "public",
+    "site": "aifusion2k24",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

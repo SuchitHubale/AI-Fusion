@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
-import AIFusionHero from './ai-fusion-hero-js';
-import Snowfall from './snowfall-js';
-import Sponsors from './Sponsors';
-import Footer from './footer-js';
-import { events } from './data-js';
+import AIFusionHero from './components/sections/hero/AIFusionHero.jsx';
+import Snowfall from './components/effects/Snowfall.jsx';
+import Footer from './components/layout/Footer.jsx';
+import { events } from './utils/data';
 import "@fontsource/rajdhani/400.css";
 import "@fontsource/rajdhani/600.css";
 import "@fontsource/rajdhani/700.css";
@@ -12,9 +11,9 @@ import "@fontsource/inter/400.css";
 import "@fontsource/inter/700.css";
 
 // Lazy load components
-const EventList = lazy(() => import('./event-list-js'));
-const EventDetails = lazy(() => import('./event-details-js'));
-const RegistrationForm = lazy(() => import('./registration-form-js'));
+const EventList = lazy(() => import('./components/events/EventList.jsx'));
+const EventDetails = lazy(() => import('./components/events/EventDetails.jsx'));
+const RegistrationForm = lazy(() => import('./pages/registration-form'));
 
 const fontFaceStyles = `
   @font-face {
@@ -49,7 +48,7 @@ const Main = () => {
   
   const eventsRef = useRef(null);
   const contactRef = useRef(null);
-  const sponsorsRef = useRef(null);
+  const subscribeRef = useRef(null);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -72,7 +71,7 @@ const Main = () => {
       Events: eventsRef,
       contact: contactRef,
       support: contactRef,
-      sponsors: sponsorsRef
+      subscribe: contactRef
     };
 
     if (refs[section]?.current) {
@@ -81,7 +80,7 @@ const Main = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-indigo-900 to-purple-900 text-white overflow-hidden">
+    <div className="min-h-screen overflow-hidden text-white bg-gradient-to-br from-black via-indigo-900 to-purple-900">
       <Toaster 
         position="top-center"
         toastOptions={{
@@ -100,7 +99,7 @@ const Main = () => {
       />
       <Snowfall />
       <div className="relative z-10">
-        <main className="container mx-auto p-0 md:p-0 w-full h-full">
+        <main className="container w-full h-full p-0 mx-auto md:p-0">
           <div ref={eventsRef}>
             <Suspense fallback={<div>Loading events...</div>}>
               <EventList 
@@ -109,8 +108,8 @@ const Main = () => {
               />
             </Suspense>
           </div>
-          {/* <div ref={sponsorsRef}>
-            <Sponsors />
+          {/* <div ref={subscribeRef}>
+            <subscribe />
           </div> */}
         </main>
 
